@@ -1,14 +1,26 @@
 // components/ShareButton.jsx
 
-'use client'
+"use client";
+
+import { useState } from "react";
 
 export default function ShareButton() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <button
-      onClick={() => navigator.clipboard.writeText(window.location.href)}
-      className="text-sm text-center text-gray-600 hover:text-gray-400 transition-colors"
+      onClick={handleCopy}
+      className="w-full py-3 rounded-xl border border-gray-700 text-gray-400 hover:border-indigo-500 hover:text-indigo-400 transition-all text-sm font-medium"
     >
-      Copy link to share this roast 🔗
+      {copied
+        ? "✅ Link copied! Share the roast"
+        : "🔗 Copy link to share this roast"}
     </button>
-  )
+  );
 }
